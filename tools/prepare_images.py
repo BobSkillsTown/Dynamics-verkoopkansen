@@ -76,6 +76,13 @@ def rename_tabblad(img):
     bw = BESTANDEN.width
     delta = bw - tw
     span = 170  # covers "Gerelateerd" and its chevron, stays clear of side panels
+    # A side panel opened over the form must stay untouched: stop at its left edge
+    reach = x + tw + span + max(delta, 0)
+    cols = gray(img)[200:1000, x:reach].mean(axis=0)
+    jumps = np.abs(np.diff(cols))
+    if jumps.max() > 8:
+        reach = x + int(jumps.argmax()) + 1
+        span = max(0, reach - max(delta, 0) - (x + tw))
     img = img.copy()
     # Shift what follows the label (e.g. "Gerelateerd") to make room
     right = img.crop((x + tw, TAB_Y0, x + tw + span, TAB_Y1))
