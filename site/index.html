@@ -1,0 +1,427 @@
+<title>Verkoopkansen vernieuwd</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: app bar like Dynamics 365, intro with series choice, then one screen per step — comparison slider left, explanation panel right */
+:root{
+  --bg:#F3F4F7; --surface:#FFFFFF; --fg:#1B1F27; --muted:#5A6272; --line:#DCE0E7;
+  --accent:#0F6CBD; --accent-fg:#FFFFFF; --accent-soft:#E6F0FA;
+  --mark:#D83B01; --mark-soft:rgba(216,59,1,.10);
+  --bar:#0B2447; --bar-fg:#FFFFFF; --bar-muted:#AFC0DA;
+  --note:#FFF6DD; --note-fg:#5C4300; --note-line:#F0D88A;
+  --ph:#EEF1F5; --ph-stripe:#E3E7ED; --ph-fg:#5A6272;
+  --ok:#107C10;
+  --font:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --font-display:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161B; --surface:#1C2027; --fg:#E7EAF0; --muted:#9BA4B4; --line:#2E3440;
+  --accent:#4BA0E8; --accent-fg:#0B1220; --accent-soft:#1A2B3E;
+  --mark:#FF7A45; --mark-soft:rgba(255,122,69,.14);
+  --bar:#0A1A33; --bar-fg:#FFFFFF; --bar-muted:#8EA3C4;
+  --note:#2E2712; --note-fg:#F2DC9B; --note-line:#5A4A1C;
+  --ph:#222731; --ph-stripe:#272D38; --ph-fg:#9BA4B4;
+  --ok:#54B054; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161B; --surface:#1C2027; --fg:#E7EAF0; --muted:#9BA4B4; --line:#2E3440;
+  --accent:#4BA0E8; --accent-fg:#0B1220; --accent-soft:#1A2B3E;
+  --mark:#FF7A45; --mark-soft:rgba(255,122,69,.14);
+  --bar:#0A1A33; --bar-fg:#FFFFFF; --bar-muted:#8EA3C4;
+  --note:#2E2712; --note-fg:#F2DC9B; --note-line:#5A4A1C;
+  --ph:#222731; --ph-stripe:#272D38; --ph-fg:#9BA4B4;
+  --ok:#54B054; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.5}
+.wrap{max-width:1480px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* App bar */
+.appbar{background:var(--bar);color:var(--bar-fg)}
+.appbar .wrap{display:flex;align-items:center;gap:16px;min-height:48px;flex-wrap:wrap;padding-block:6px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;background:none;border:0;color:inherit;cursor:pointer;padding:0}
+.brand svg{flex:none}
+.brand span{color:var(--bar-muted);font-weight:400}
+.progress{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--bar-muted);flex-wrap:wrap}
+.segs{display:flex;gap:3px;flex-wrap:wrap}
+.segs button{width:18px;height:14px;border:0;padding:5px 0;background:transparent;cursor:pointer}
+.segs button::before{content:"";display:block;height:4px;border-radius:2px;background:rgba(255,255,255,.22)}
+.segs button.done::before{background:rgba(255,255,255,.6)}
+.segs button.cur::before{background:var(--bar-fg)}
+.segs .gap{width:8px}
+
+/* Demo notice */
+.notice{background:var(--note);color:var(--note-fg);border-bottom:1px solid var(--note-line);font-size:13.5px}
+.notice .wrap{padding-block:8px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.notice b{white-space:nowrap}
+
+main{padding-block:24px 40px}
+
+/* Intro + summary */
+.intro{max-width:820px;display:grid;gap:20px}
+.eyebrow{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.intro h1{font-size:clamp(26px,3.4vw,36px);line-height:1.15;font-weight:600}
+.lead{font-size:17px;color:var(--muted);max-width:62ch;margin:0}
+.howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.howto li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:4px;min-width:0}
+.howto b{font-size:14px}
+.howto span{font-size:13.5px;color:var(--muted)}
+.choose h2{font-size:18px;font-weight:600;margin-bottom:10px}
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.choice{display:grid;grid-template-rows:auto 1fr auto;gap:6px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;min-width:0}
+.choice:hover{border-color:var(--accent);background:var(--accent-soft)}
+.choice b{font-size:16px;font-family:var(--font-display)}
+.choice span{font-size:13.5px;color:var(--muted)}
+.choice .go{color:var(--accent);font-weight:600;font-size:14px}
+
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:6px;padding:9px 18px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.primary:hover{filter:brightness(1.08)}
+
+/* Chapter */
+.chhead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.chhead h2{font-size:24px;font-weight:600;line-height:1.2}
+.chhead p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.series-pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-right:8px;letter-spacing:0;text-transform:none}
+.view-toggle{display:flex;gap:8px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:6px 12px;font-size:13px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+.grid.big{grid-template-columns:minmax(0,1fr)}
+
+/* Comparison slider */
+.cmp{position:relative;aspect-ratio:1707/860;max-width:100%;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:#FAFAFA;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.cmp img,.cmp .ph{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.cmp .ph{background:repeating-linear-gradient(135deg,var(--ph) 0 18px,var(--ph-stripe) 18px 36px);display:grid;place-items:center end;color:var(--ph-fg);text-align:center}
+.cmp .ph div{display:grid;gap:4px;width:42%;margin-right:4%}
+.cmp .ph b{font-size:clamp(14px,1.8vw,22px);font-family:var(--font-display)}
+.cmp .ph span{font-size:clamp(11px,1.1vw,14px)}
+.cmp .old{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.cmp.solo .old,.cmp.solo .divider,.cmp.solo .knob,.cmp.solo input[type=range],.cmp.solo .old-t{display:none}
+.cmp.solo .ph{place-items:center}
+.cmp.solo .ph div{width:auto;margin:0;padding:0}
+.cmp .divider{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--accent);z-index:2;pointer-events:none}
+.cmp .knob{position:absolute;top:50%;left:var(--pos);width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;z-index:2;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.cmp input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:3}
+.cmp input[type=range]:focus-visible ~ .knob{outline:3px solid var(--fg);outline-offset:2px}
+.tag{position:absolute;top:10px;z-index:4;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:4px;pointer-events:none;transition:opacity .2s}
+.tag.old-t{left:10px;background:#3B4250;color:#FFFFFF}
+.tag.new-t{right:10px;background:#0F6CBD;color:#FFFFFF}
+.hl{position:absolute;z-index:2;border:2px dashed var(--mark);background:var(--mark-soft);border-radius:4px;pointer-events:none;transition:all .35s ease}
+.hot{position:absolute;z-index:5;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:2px solid #FFFFFF;background:var(--mark);color:#FFFFFF;font-weight:700;font-size:13px;cursor:pointer;display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.35);padding:0;font-variant-numeric:tabular-nums}
+.hot.sel{transform:scale(1.18)}
+.hint{margin:10px 0 0;font-size:13px;color:var(--muted)}
+
+/* Explanation panel */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:grid;min-width:0}
+.panel-list{list-style:none;margin:0;padding:8px;display:grid;gap:2px;border-bottom:1px solid var(--line)}
+.panel-list button{width:100%;display:flex;gap:10px;align-items:center;text-align:left;border:0;background:transparent;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+.panel-list button:hover{background:var(--bg)}
+.panel-list button[aria-current="true"]{background:var(--accent-soft);font-weight:600}
+.num{flex:none;width:22px;height:22px;border-radius:50%;background:var(--mark);color:#FFFFFF;font-size:12px;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.num.empty{background:var(--line);color:var(--muted)}
+.seen{margin-left:auto;color:var(--ok);font-size:12px;font-weight:600;white-space:nowrap}
+.detail{padding:18px 20px 20px;display:grid;gap:14px}
+.detail h3{font-size:18px;font-weight:600;line-height:1.3}
+.detail section{display:grid;gap:2px}
+.detail h4{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.detail p{margin:0;font-size:14.5px}
+.detail .tbd{color:var(--muted);font-style:italic}
+.detail .you{background:var(--accent-soft);border-radius:6px;padding:10px 12px}
+.detail .you h4{color:var(--accent)}
+.sample{justify-self:start;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--note-fg);background:var(--note);border:1px solid var(--note-line);border-radius:4px;padding:2px 7px}
+
+/* Pager */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap}
+
+/* Summary */
+.sum{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);font-size:14.5px}
+.sum th,.sum td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.sum th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
+.sum td:first-child{white-space:nowrap}
+.sum td.tbd{color:var(--muted);font-style:italic}
+.sum caption{text-align:left;font-weight:600;font-size:16px;padding:0 0 8px;font-family:var(--font-display)}
+.tablewrap{overflow-x:auto;display:grid;gap:20px}
+.contact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;font-size:14.5px}
+
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:700px){.howto,.choices{grid-template-columns:minmax(0,1fr)}.hot{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:11px}.tag{font-size:10px;padding:2px 6px}.cmp .knob{width:30px;height:30px;margin:-15px 0 0 -15px}}
+@media (prefers-reduced-motion:reduce){.hl{transition:none}}
+</style>
+
+<header class="appbar">
+  <div class="wrap">
+    <button class="brand" id="home" title="Terug naar start">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><g fill="currentColor"><rect x="0" y="0" width="4" height="4"/><rect x="7" y="0" width="4" height="4"/><rect x="14" y="0" width="4" height="4"/><rect x="0" y="7" width="4" height="4"/><rect x="7" y="7" width="4" height="4"/><rect x="14" y="7" width="4" height="4"/><rect x="0" y="14" width="4" height="4"/><rect x="7" y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/></g></svg>
+      Verkoopkansen <span>· wat is er veranderd</span>
+    </button>
+    <div class="progress"><span id="progLabel" aria-live="polite"></span><div class="segs" id="segs"></div></div>
+  </div>
+</header>
+<div class="notice"><div class="wrap"><b>Concept.</b><span>Alle screenshots staan erin. De uitleg per wijziging schrijven we nog.</span></div></div>
+
+<main class="wrap" id="app"></main>
+
+<script>
+const IMG_W = 1707, IMG_H = 860;
+// Per screen: old and new screenshot (new = null until delivered); change boxes are in screenshot pixels (1707 × 860)
+const SERIES = {
+  nk: {
+    label: "Nieuwe klant", type: "Type Nieuwe Klant",
+    intro: "Voor verkoopkansen bij een klant die nog geen contract heeft.",
+    screens: [
+      { title: "Algemene informatie", sub: "Het eerste tabblad dat je ziet als je een verkoopkans aanmaakt.", old: "img/oud/nk-01-algemene-informatie.png", neu: "img/nieuw/nk-01-algemene-informatie.png", changes: [] },
+      { title: "Fase 1 – Discovery", sub: "De behoefte van de prospect in kaart brengen.", old: "img/oud/nk-02-fase-1.png", neu: "img/nieuw/nk-02-fase-1-deel-1.png", changes: [] },
+      { title: "Fase 1 – Producten toevoegen", sub: "Het venster waarin je de gewenste producten kiest.", old: "img/oud/nk-02-fase-1.png", neu: "img/nieuw/nk-03-fase-1-deel-product-toevoegen.png", changes: [] },
+      { title: "Fase 1 – Gewenste producten", sub: "Onderste deel van het tabblad, na het toevoegen van producten.", old: "img/oud/nk-02-fase-1.png", neu: "img/nieuw/nk-04-fase-1-deel-2.png", changes: [] },
+      { title: "Fase 2 – Demo", sub: "De klant laten zien hoe de oplossing werkt.", old: "img/oud/nk-03-fase-2.png", neu: "img/nieuw/nk-05-fase-2.png", changes: [] },
+      { title: "Fase 3 – Offerte", sub: "Het formele voorstel aan de prospect.", old: "img/oud/nk-04-fase-3.png", neu: "img/nieuw/nk-06-fase-3.png", changes: [] },
+      { title: "Fase 4 – Onderhandeling (deel 1)", sub: "Bovenste deel van het tabblad.", old: "img/oud/nk-05-fase-4-deel-1.png", neu: "img/nieuw/nk-07-fase-4-deel-1.png", changes: [] },
+      { title: "Fase 4 – Onderhandeling (deel 2)", sub: "Onderste deel van het tabblad, na scrollen.", old: "img/oud/nk-06-fase-4-deel-2.png", neu: "img/nieuw/nk-08-fase-4-deel-2.png", changes: [] },
+      { title: "Fase 5 – Facturatie", sub: "Contract klaarzetten voor de administratieafdeling.", old: "img/oud/nk-07-fase-5.png", neu: "img/nieuw/nk-09-fase-5-deel-1.png", changes: [] },
+      { title: "Fase 5 – Factuurgegevens", sub: "Gegevens die uit het account komen, na scrollen.", old: "img/oud/nk-07-fase-5.png", neu: "img/nieuw/nk-10-fase-5-deel-2.png", changes: [] },
+      { title: "Afsluiten als binnengehaald", sub: "Het venster dat verschijnt als je de verkoopkans wint.", old: null, neu: "img/nieuw/nk-11-verkoopkans-binnengehaald.png", changes: [] }
+    ]
+  },
+  vl: {
+    label: "Verlenging", type: "Type Verlenging",
+    intro: "Voor verkoopkansen bij een bestaande klant van wie het contract afloopt.",
+    screens: [
+      { title: "Algemene informatie", sub: "Het eerste tabblad dat je ziet als je een verkoopkans aanmaakt.", old: "img/oud/vl-01-algemene-informatie.png", neu: "img/nieuw/vl-01-algemene-informatie.png", changes: [] },
+      { title: "Fase 1 – Lopend contract", sub: "Het contract loopt, de verlengingsgesprekken zijn nog niet gestart.", old: "img/oud/vl-02-fase-1.png", neu: "img/nieuw/vl-01-fase-1.png", changes: [] },
+      { title: "Fase 2 – In gesprek", sub: "Het verlengingsgesprek met de klant is begonnen.", old: "img/oud/vl-03-fase-2.png", neu: "img/nieuw/vl-02-fase-2.png", changes: [] },
+      { title: "Stilzwijgend verlengen: Ja", sub: "Wat er gebeurt als het contract stilzwijgend wordt verlengd.", old: null, neu: "img/nieuw/vl-04-fase-5-stilzwijgend-verlengen.png", changes: [] },
+      { title: "Fase 3 – Offerte", sub: "Het formele voorstel aan de klant.", old: "img/oud/vl-04-fase-3.png", neu: "img/nieuw/vl-05-fase-3.png", changes: [] },
+      { title: "Fase 4 – Onderhandeling (deel 1)", sub: "Bovenste deel van het tabblad.", old: "img/oud/vl-05-fase-4-deel-1.png", neu: "img/nieuw/vl-06-fase-4-deel-1.png", changes: [] },
+      { title: "Fase 4 – Onderhandeling (deel 2)", sub: "Onderste deel van het tabblad, na scrollen.", old: "img/oud/vl-06-fase-4-deel-2.png", neu: "img/nieuw/vl-07-fase-4-deel-2.png", changes: [] },
+      { title: "Fase 5 – Facturatie", sub: "Contract klaarzetten voor de administratieafdeling.", old: "img/oud/vl-07-fase-5.png", neu: "img/nieuw/vl-03-fase-5.png", changes: [] },
+      { title: "Fase 5 – Factuurgegevens", sub: "Gegevens die uit het account komen, na scrollen.", old: "img/oud/vl-07-fase-5.png", neu: "img/nieuw/vl-08-fase-5-deel-2.png", changes: [] },
+      { title: "Afsluiten als binnengehaald", sub: "Het venster dat verschijnt als je de verkoopkans wint.", old: null, neu: null, changes: [] }
+    ]
+  }
+};
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const app = document.getElementById("app");
+let picked = [];   // series keys in viewing order
+let flat = [];     // [{key, idx}] for every screen in the chosen series
+let step = 0;      // 0 = intro, 1..flat.length = screens, flat.length + 1 = summary
+let big = false, anim = null, introTimer = null;
+const seen = {};
+
+function pct(v, total){ return (v / total * 100) + "%"; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function choose(keys){
+  picked = keys;
+  flat = keys.flatMap(k => SERIES[k].screens.map((_, idx) => ({ key: k, idx })));
+  go(1);
+}
+
+function renderProgress(){
+  const segs = document.getElementById("segs");
+  const label = document.getElementById("progLabel");
+  if (step === 0) { segs.innerHTML = ""; label.textContent = "Introductie"; return; }
+  let html = "", prev = null;
+  flat.forEach((f, i) => {
+    if (prev && prev !== f.key) html += `<span class="gap"></span>`;
+    prev = f.key;
+    const n = i + 1;
+    html += `<button class="${n === step ? "cur" : n < step ? "done" : ""}" data-step="${n}" aria-label="${esc(SERIES[f.key].label + ": " + SERIES[f.key].screens[f.idx].title)}"></button>`;
+  });
+  segs.innerHTML = html;
+  segs.querySelectorAll("button").forEach(b => b.onclick = () => go(+b.dataset.step));
+  label.textContent = step > flat.length ? "Overzicht" : `${SERIES[flat[step - 1].key].label} · scherm ${flat[step - 1].idx + 1} van ${SERIES[flat[step - 1].key].screens.length}`;
+}
+
+function go(n){
+  step = Math.max(0, Math.min(flat.length + 1, n));
+  if (anim) cancelAnimationFrame(anim);
+  clearTimeout(introTimer);
+  renderProgress();
+  if (step === 0) renderIntro();
+  else if (step > flat.length) renderSummary();
+  else renderScreen(flat[step - 1]);
+  window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+}
+
+function renderIntro(){
+  const n = k => SERIES[k].screens.length;
+  app.innerHTML = `
+  <div class="intro">
+    <div class="eyebrow">Dynamics 365 Sales · Verkoopkansen</div>
+    <h1>Wat is er veranderd in Verkoopkansen?</h1>
+    <p class="lead">Het formulier voor verkoopkansen is vernieuwd. In een paar minuten zie je per scherm wat er anders is, waarom, en wat het voor jouw werk betekent.</p>
+    <ul class="howto">
+      <li><b>Sleep het schuifje</b><span>Links zie je het oude scherm, rechts het nieuwe.</span></li>
+      <li><b>Klik op een nummer</b><span>De oranje nummers wijzen elke wijziging aan.</span></li>
+      <li><b>Lees wat het voor jou betekent</b><span>Per wijziging: wat, waarom, en wat jij anders doet.</span></li>
+    </ul>
+    <div class="choose">
+      <h2>Met welk type verkoopkans werk jij?</h2>
+      <div class="choices">
+        <button class="choice" data-keys="nk"><b>Nieuwe klant</b><span>${esc(SERIES.nk.intro)}</span><span class="go">${n("nk")} schermen →</span></button>
+        <button class="choice" data-keys="vl"><b>Verlenging</b><span>${esc(SERIES.vl.intro)}</span><span class="go">${n("vl")} schermen →</span></button>
+        <button class="choice" data-keys="nk,vl"><b>Allebei</b><span>Eerst Nieuwe klant, daarna Verlenging.</span><span class="go">${n("nk") + n("vl")} schermen →</span></button>
+      </div>
+    </div>
+  </div>`;
+  app.querySelectorAll(".choice").forEach(b => b.onclick = () => choose(b.dataset.keys.split(",")));
+}
+
+function renderScreen({ key, idx }){
+  const S = SERIES[key], c = S.screens[idx];
+  const sid = key + idx;
+  seen[sid] = seen[sid] || c.changes.map(() => false);
+  const last = step === flat.length;
+  const solo = !c.old; // screen without an old counterpart: show the new screenshot only
+  const newLayer = c.neu
+    ? `<img class="new" src="${c.neu}" alt="Nieuwe situatie: ${esc(c.title)}">`
+    : `<div class="ph new" role="img" aria-label="Nieuwe screenshot volgt"><div><b>Nieuwe situatie</b><span>Screenshot volgt</span></div></div>`;
+  const listHtml = c.changes.length
+    ? c.changes.map((ch, i) => `<li><button data-i="${i}"><span class="num">${i + 1}</span><span>${esc(ch.title)}</span><span class="seen" data-seen="${i}"></span></button></li>`).join("")
+    : `<li><button disabled><span class="num empty">?</span><span>Wijzigingen volgen</span></button></li>`;
+
+  app.innerHTML = `
+  <div class="chhead">
+    <div>
+      <div class="eyebrow"><span class="series-pill">${esc(S.type)}</span>Scherm ${idx + 1} van ${S.screens.length}</div>
+      <h2>${esc(c.title)}</h2><p>${esc(c.sub)}</p>
+    </div>
+    <div class="view-toggle">
+      <div class="seg" role="group" aria-label="Weergave" ${solo ? "hidden" : ""}>
+        <button data-pos="100" aria-pressed="false">Oud</button>
+        <button data-pos="50" aria-pressed="false">Beide</button>
+        <button data-pos="0" aria-pressed="false">Nieuw</button>
+      </div>
+      <div class="seg"><button id="bigBtn" aria-pressed="${big}">Groot beeld</button></div>
+    </div>
+  </div>
+  <div class="grid ${big ? "big" : ""}" id="grid">
+    <div>
+      <div class="cmp ${solo ? "solo" : ""}" id="cmp" style="--pos:${solo ? 0 : 100}%">
+        ${newLayer}
+        ${solo ? "" : `<img class="old" src="${c.old}" alt="Oude situatie: ${esc(c.title)}">`}
+        <div class="hl" id="hl" hidden></div>
+        <span class="tag old-t" id="tagOld">Oud</span>
+        <span class="tag new-t" id="tagNew">${solo ? "Nieuw scherm" : "Nieuw"}</span>
+        <input type="range" id="range-${sid}" min="0" max="100" step="0.5" value="100" aria-label="Schuif tussen oud en nieuw">
+        <div class="divider"></div>
+        <div class="knob" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M6.5 4 2 9l4.5 5M11.5 4 16 9l-4.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        ${c.changes.map((ch, i) => `<button class="hot" data-i="${i}" style="left:${pct(Math.max(ch.box[0], 30), IMG_W)};top:${pct(Math.max(ch.box[1], 30), IMG_H)}" aria-label="Wijziging ${i + 1}: ${esc(ch.title)}">${i + 1}</button>`).join("")}
+      </div>
+      <p class="hint">${solo ? "Dit scherm is nieuw. Klik op een nummer voor uitleg." : "Sleep over het beeld om oud en nieuw te vergelijken. Klik op een nummer voor uitleg."}</p>
+    </div>
+    <aside class="panel" aria-label="Toelichting">
+      <ol class="panel-list" id="list">${listHtml}</ol>
+      <div class="detail" id="detail"></div>
+    </aside>
+  </div>
+  <nav class="pager">
+    <button class="btn" id="prev">← ${step === 1 ? "Terug naar start" : "Vorige"}</button>
+    <button class="btn primary" id="next">${last ? "Naar overzicht →" : "Volgend scherm →"}</button>
+  </nav>`;
+
+  const cmp = document.getElementById("cmp");
+  const range = cmp.querySelector("input[type=range]");
+  const hl = document.getElementById("hl");
+  const segBtns = app.querySelectorAll(".seg button[data-pos]");
+
+  function setPos(p){
+    cmp.style.setProperty("--pos", p + "%");
+    range.value = p;
+    document.getElementById("tagOld").style.opacity = p < 8 ? 0 : 1;
+    document.getElementById("tagNew").style.opacity = p > 92 && !solo ? 0 : 1;
+    segBtns.forEach(b => b.setAttribute("aria-pressed", String(Math.abs(+b.dataset.pos - p) < 0.6)));
+  }
+  function animateTo(target, ms = 900){
+    if (anim) cancelAnimationFrame(anim);
+    if (solo) return;
+    const from = +range.value;
+    if (reduced) { setPos(target); return; }
+    const t0 = performance.now();
+    const tick = now => {
+      const t = Math.min(1, (now - t0) / ms);
+      const e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      setPos(from + (target - from) * e);
+      if (t < 1) anim = requestAnimationFrame(tick);
+    };
+    anim = requestAnimationFrame(tick);
+  }
+  function select(i, reveal){
+    const ch = c.changes[i];
+    seen[sid][i] = true;
+    const [x, y, w, h] = ch.box;
+    Object.assign(hl.style, { left: pct(x, IMG_W), top: pct(y, IMG_H), width: pct(w, IMG_W), height: pct(h, IMG_H) });
+    hl.hidden = false;
+    app.querySelectorAll(".hot").forEach(b => b.classList.toggle("sel", +b.dataset.i === i));
+    app.querySelectorAll("#list button").forEach(b => b.setAttribute("aria-current", String(+b.dataset.i === i)));
+    app.querySelectorAll("[data-seen]").forEach(s => { s.textContent = seen[sid][+s.dataset.seen] ? "✓ bekeken" : ""; });
+    document.getElementById("detail").innerHTML = `
+      <h3>${i + 1}. ${esc(ch.title)}</h3>
+      <section><h4>Wat is er veranderd</h4><p>${esc(ch.wat)}</p></section>
+      <section><h4>Waarom</h4><p>${esc(ch.waarom)}</p></section>
+      <section class="you"><h4>Wat betekent dit voor jou</h4><p>${esc(ch.jij)}</p></section>`;
+    // Reveal the new state of the highlighted area
+    if (reveal) animateTo(Math.max(0, x / IMG_W * 100 - 2), 700);
+  }
+
+  range.addEventListener("input", () => { if (anim) cancelAnimationFrame(anim); setPos(+range.value); });
+  segBtns.forEach(b => b.onclick = () => animateTo(+b.dataset.pos, 600));
+  app.querySelectorAll(".hot, #list button[data-i]").forEach(b => b.onclick = () => select(+b.dataset.i, true));
+  document.getElementById("bigBtn").onclick = e => {
+    big = !big;
+    document.getElementById("grid").classList.toggle("big", big);
+    e.currentTarget.setAttribute("aria-pressed", String(big));
+  };
+  document.getElementById("prev").onclick = () => go(step - 1);
+  document.getElementById("next").onclick = () => go(step + 1);
+
+  setPos(solo ? 0 : 100);
+  if (c.changes.length) select(0, false);
+  else document.getElementById("detail").innerHTML = `
+      <span class="sample">Nog in te vullen</span>
+      <h3>Wijzigingen op dit scherm</h3>
+      <section><h4>Wat is er veranderd</h4><p class="tbd">${c.neu ? "Schrijven we samen." : "Volgt zodra de screenshot er is."}</p></section>
+      <section><h4>Waarom</h4><p class="tbd">Schrijven we samen.</p></section>
+      <section class="you"><h4>Wat betekent dit voor jou</h4><p class="tbd">Schrijven we samen.</p></section>`;
+  // Opening transition: old screen first, then the slider sweeps to show the new one
+  introTimer = setTimeout(() => animateTo(50, 1400), reduced ? 0 : 500);
+}
+
+function renderSummary(){
+  const other = picked.length === 1 ? (picked[0] === "nk" ? "vl" : "nk") : null;
+  const table = k => {
+    const S = SERIES[k];
+    const rows = S.screens.flatMap(sc => sc.changes.length
+      ? sc.changes.map((ch, i) => `<tr><td>${i === 0 ? esc(sc.title) : ""}</td><td>${esc(ch.title)}</td><td>${esc(ch.jij)}</td></tr>`)
+      : [`<tr><td>${esc(sc.title)}</td><td class="tbd" colspan="2">Wijzigingen volgen</td></tr>`]).join("");
+    return `<table class="sum"><caption>${esc(S.type)}</caption><thead><tr><th>Scherm</th><th>Wijziging</th><th>Wat betekent dit voor jou</th></tr></thead><tbody>${rows}</tbody></table>`;
+  };
+  app.innerHTML = `
+  <div class="intro" style="max-width:980px">
+    <div class="eyebrow">Overzicht</div>
+    <h1>Alles op een rij</h1>
+    <p class="lead">Alle wijzigingen en wat ze voor jou betekenen. Handig om later nog eens terug te kijken.</p>
+    <div class="tablewrap">${picked.map(table).join("")}</div>
+    <div class="contact"><b>Vragen?</b> Neem contact op met <em>[naam of kanaal invullen]</em>.</div>
+    <nav class="pager" style="margin-top:0">
+      <button class="btn" id="prev">← Vorige</button>
+      ${other ? `<button class="btn primary" id="other">Bekijk ook ${esc(SERIES[other].label)} →</button>` : `<button class="btn" id="restart">Terug naar start</button>`}
+    </nav>
+  </div>`;
+  document.getElementById("prev").onclick = () => go(step - 1);
+  if (other) document.getElementById("other").onclick = () => choose([other]);
+  else document.getElementById("restart").onclick = () => go(0);
+}
+
+document.getElementById("home").onclick = () => go(0);
+go(0);
+</script>
