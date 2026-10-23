@@ -165,7 +165,7 @@ main{padding-block:24px 40px}
     <div class="progress"><span id="progLabel" aria-live="polite"></span><div class="segs" id="segs"></div></div>
   </div>
 </header>
-<div class="notice"><div class="wrap"><b>Concept.</b><span>Alle screenshots staan erin. De uitleg per wijziging schrijven we nog.</span></div></div>
+<div class="notice"><div class="wrap"><b>Concept.</b><span>Ter controle: teksten en nummers staan erin, de screenshot van Afsluiten bij Verlenging volgt nog.</span></div></div>
 
 <main class="wrap" id="app"></main>
 
@@ -173,39 +173,857 @@ main{padding-block:24px 40px}
 const IMG_W = 1707, IMG_H = 860;
 // Per screen: old and new screenshot (new = null until delivered); change boxes are in screenshot pixels (1707 × 860)
 const SERIES = {
-  nk: {
-    label: "Nieuwe klant", type: "Type Nieuwe Klant",
-    intro: "Voor verkoopkansen bij een klant die nog geen contract heeft.",
-    screens: [
-      { title: "Algemene informatie", sub: "Het eerste tabblad dat je ziet als je een verkoopkans aanmaakt.", old: "img/oud/nk-01-algemene-informatie.png", neu: "img/nieuw/nk-01-algemene-informatie.png", changes: [] },
-      { title: "Fase 1 – Discovery", sub: "De behoefte van de prospect in kaart brengen.", old: "img/oud/nk-02-fase-1.png", neu: "img/nieuw/nk-02-fase-1-deel-1.png", changes: [] },
-      { title: "Fase 1 – Producten toevoegen", sub: "Het venster waarin je de gewenste producten kiest.", old: "img/oud/nk-02-fase-1.png", neu: "img/nieuw/nk-03-fase-1-deel-product-toevoegen.png", changes: [] },
-      { title: "Fase 1 – Gewenste producten", sub: "Onderste deel van het tabblad, na het toevoegen van producten.", old: "img/oud/nk-02-fase-1.png", neu: "img/nieuw/nk-04-fase-1-deel-2.png", changes: [] },
-      { title: "Fase 2 – Demo", sub: "De klant laten zien hoe de oplossing werkt.", old: "img/oud/nk-03-fase-2.png", neu: "img/nieuw/nk-05-fase-2.png", changes: [] },
-      { title: "Fase 3 – Offerte", sub: "Het formele voorstel aan de prospect.", old: "img/oud/nk-04-fase-3.png", neu: "img/nieuw/nk-06-fase-3.png", changes: [] },
-      { title: "Fase 4 – Onderhandeling (deel 1)", sub: "Bovenste deel van het tabblad.", old: "img/oud/nk-05-fase-4-deel-1.png", neu: "img/nieuw/nk-07-fase-4-deel-1.png", changes: [] },
-      { title: "Fase 4 – Onderhandeling (deel 2)", sub: "Onderste deel van het tabblad, na scrollen.", old: "img/oud/nk-06-fase-4-deel-2.png", neu: "img/nieuw/nk-08-fase-4-deel-2.png", changes: [] },
-      { title: "Fase 5 – Facturatie", sub: "Contract klaarzetten voor de administratieafdeling.", old: "img/oud/nk-07-fase-5.png", neu: "img/nieuw/nk-09-fase-5-deel-1.png", changes: [] },
-      { title: "Fase 5 – Factuurgegevens", sub: "Gegevens die uit het account komen, na scrollen.", old: "img/oud/nk-07-fase-5.png", neu: "img/nieuw/nk-10-fase-5-deel-2.png", changes: [] },
-      { title: "Afsluiten als binnengehaald", sub: "Het venster dat verschijnt als je de verkoopkans wint.", old: null, neu: "img/nieuw/nk-11-verkoopkans-binnengehaald.png", changes: [] }
+ "nk": {
+  "label": "Nieuwe klant",
+  "type": "Type Nieuwe Klant",
+  "intro": "Voor verkoopkansen van new business.",
+  "screens": [
+   {
+    "title": "Algemene informatie",
+    "sub": "Het eerste tabblad dat je ziet als je een verkoopkans aanmaakt.",
+    "old": "img/oud/nk-01-algemene-informatie.png",
+    "neu": "img/nieuw/nk-01-algemene-informatie.png",
+    "changes": [
+     {
+      "title": "Contactpersoon is verplicht",
+      "box": [
+       8,
+       378,
+       562,
+       36
+      ],
+      "wat": "Je kunt de verkoopkans pas opslaan als er een contactpersoon is gekozen.",
+      "waarom": "Elke verkoopkans heeft een vast aanspreekpunt bij de klant nodig.",
+      "jij": "Kies de contactpersoon meteen bij het aanmaken."
+     },
+     {
+      "title": "Toelichting Broncampagne vervangt Bron",
+      "box": [
+       8,
+       426,
+       562,
+       36
+      ],
+      "wat": "Het veld Bron is vervangen door Toelichting Broncampagne. Ook dit veld is verplicht.",
+      "waarom": "",
+      "jij": "Kies via welke campagne de klant bij ons is gekomen."
+     },
+     {
+      "title": "Aantal werknemers staat hier",
+      "box": [
+       8,
+       522,
+       562,
+       36
+      ],
+      "wat": "Het aantal werknemers van de klant vul je nu op dit tabblad in. Eerder stond het als Aantal medewerkers in Fase 3.",
+      "waarom": "De omvang van de klant is vanaf het begin nodig voor een goede inschatting.",
+      "jij": "Vul het aantal werknemers in bij het aanmaken."
+     },
+     {
+      "title": "Onderwerp wordt automatisch gevuld",
+      "box": [
+       8,
+       570,
+       562,
+       36
+      ],
+      "wat": "Na het opslaan krijgt de verkoopkans automatisch een naam: account en type, bijvoorbeeld “Test Bedrijf Bob | Nieuwe Klant”.",
+      "waarom": "Zo hebben alle verkoopkansen dezelfde herkenbare naam.",
+      "jij": "Je hoeft zelf geen onderwerp te bedenken."
+     },
+     {
+      "title": "Verwachte start datum contract",
+      "box": [
+       8,
+       640,
+       562,
+       52
+      ],
+      "wat": "Start datum contract heet nu Verwachte start datum contract.",
+      "waarom": "In deze fase is de startdatum nog een verwachting. De definitieve startdatum vul je later in.",
+      "jij": "Vul je beste inschatting in. Je past hem later aan."
+     }
     ]
-  },
-  vl: {
-    label: "Verlenging", type: "Type Verlenging",
-    intro: "Voor verkoopkansen bij een bestaande klant van wie het contract afloopt.",
-    screens: [
-      { title: "Algemene informatie", sub: "Het eerste tabblad dat je ziet als je een verkoopkans aanmaakt.", old: "img/oud/vl-01-algemene-informatie.png", neu: "img/nieuw/vl-01-algemene-informatie.png", changes: [] },
-      { title: "Fase 1 – Lopend contract", sub: "Het contract loopt, de verlengingsgesprekken zijn nog niet gestart.", old: "img/oud/vl-02-fase-1.png", neu: "img/nieuw/vl-01-fase-1.png", changes: [] },
-      { title: "Fase 2 – In gesprek", sub: "Het verlengingsgesprek met de klant is begonnen.", old: "img/oud/vl-03-fase-2.png", neu: "img/nieuw/vl-02-fase-2.png", changes: [] },
-      { title: "Stilzwijgend verlengen: Ja", sub: "Wat er gebeurt als het contract stilzwijgend wordt verlengd.", old: null, neu: "img/nieuw/vl-04-fase-5-stilzwijgend-verlengen.png", changes: [] },
-      { title: "Fase 3 – Offerte", sub: "Het formele voorstel aan de klant.", old: "img/oud/vl-04-fase-3.png", neu: "img/nieuw/vl-05-fase-3.png", changes: [] },
-      { title: "Fase 4 – Onderhandeling (deel 1)", sub: "Bovenste deel van het tabblad.", old: "img/oud/vl-05-fase-4-deel-1.png", neu: "img/nieuw/vl-06-fase-4-deel-1.png", changes: [] },
-      { title: "Fase 4 – Onderhandeling (deel 2)", sub: "Onderste deel van het tabblad, na scrollen.", old: "img/oud/vl-06-fase-4-deel-2.png", neu: "img/nieuw/vl-07-fase-4-deel-2.png", changes: [] },
-      { title: "Fase 5 – Facturatie", sub: "Contract klaarzetten voor de administratieafdeling.", old: "img/oud/vl-07-fase-5.png", neu: "img/nieuw/vl-03-fase-5.png", changes: [] },
-      { title: "Fase 5 – Factuurgegevens", sub: "Gegevens die uit het account komen, na scrollen.", old: "img/oud/vl-07-fase-5.png", neu: "img/nieuw/vl-08-fase-5-deel-2.png", changes: [] },
-      { title: "Afsluiten als binnengehaald", sub: "Het venster dat verschijnt als je de verkoopkans wint.", old: null, neu: null, changes: [] }
+   },
+   {
+    "title": "Fase 1 – Discovery",
+    "sub": "De behoefte van de prospect in kaart brengen.",
+    "old": "img/oud/nk-02-fase-1.png",
+    "neu": "img/nieuw/nk-02-fase-1-deel-1.png",
+    "changes": [
+     {
+      "title": "Slagingskans in Fase 1",
+      "box": [
+       846,
+       574,
+       844,
+       36
+      ],
+      "wat": "Slagingskans (%) staat nu in Fase 1 en is verplicht. Eerder stond het in Fase 2.",
+      "waarom": "Zo staat elke verkoopkans vanaf het begin met een kans in de pipeline. Dit getal is belangrijk voor onze forecasting.",
+      "jij": "Schat de slagingskans al in de eerste fase in. Je moet dus eerder met een waarde komen."
+     },
+     {
+      "title": "Gewenste oplossing is weg",
+      "box": [
+       8,
+       808,
+       1692,
+       50
+      ],
+      "wat": "De velden Gewenste oplossing en Gewenste oplossing overig zijn verdwenen. Daarvoor in de plaats komen producten.",
+      "waarom": "De producten zijn de basis voor de definitieve kosten in Fase 4. Die worden daardoor automatisch berekend.",
+      "jij": "Je kunt nu zelf aangeven om welke producten het gaat en hoeveel licenties."
+     }
     ]
-  }
+   },
+   {
+    "title": "Fase 1 – Producten toevoegen",
+    "sub": "Het venster waarin je de gewenste producten kiest.",
+    "old": "img/oud/nk-02-fase-1.png",
+    "neu": "img/nieuw/nk-03-fase-1-deel-product-toevoegen.png",
+    "changes": [
+     {
+      "title": "Nieuw venster Producten toevoegen",
+      "box": [
+       20,
+       110,
+       1680,
+       620
+      ],
+      "wat": "Je kiest de producten die de klant wil uit een lijst. Per product vul je het aantal licenties, de prijs per eenheid en eventueel een korting in.",
+      "waarom": "De producten zijn de basis voor de definitieve kosten in Fase 4. Die worden daardoor automatisch berekend.",
+      "jij": "Klik op Producten toevoegen, kies de producten en klik op Opslaan in Verkoopkans."
+     }
+    ]
+   },
+   {
+    "title": "Fase 1 – Gewenste producten",
+    "sub": "Onderste deel van het tabblad, na het toevoegen van producten.",
+    "old": "img/oud/nk-02-fase-1.png",
+    "neu": "img/nieuw/nk-04-fase-1-deel-2.png",
+    "changes": [
+     {
+      "title": "Sectie Gewenste producten",
+      "box": [
+       8,
+       490,
+       1692,
+       340
+      ],
+      "wat": "Onderaan Fase 1 zie je de gekozen producten met aantal, prijs, korting en totaalprijs.",
+      "waarom": "De producten zijn de basis voor de definitieve kosten in Fase 4.",
+      "jij": "Houd de lijst actueel als de wensen van de klant veranderen."
+     },
+     {
+      "title": "Potentiële omzet per jaar blijft handmatig",
+      "box": [
+       8,
+       300,
+       824,
+       40
+      ],
+      "wat": "Dit veld wordt niet uit de producten berekend.",
+      "waarom": "Dit zal nog even een handmatig veld blijven.",
+      "jij": "Vul de potentiële omzet per jaar zelf in, zoals je gewend was."
+     }
+    ]
+   },
+   {
+    "title": "Fase 2 – Demo",
+    "sub": "De klant laten zien hoe de oplossing werkt.",
+    "old": "img/oud/nk-03-fase-2.png",
+    "neu": "img/nieuw/nk-05-fase-2.png",
+    "changes": [
+     {
+      "title": "Slagingskans is weg",
+      "box": [
+       846,
+       520,
+       844,
+       44
+      ],
+      "wat": "Slagingskans staat hier niet meer. Je vult hem in Fase 1 in.",
+      "waarom": "Zo staat elke verkoopkans vanaf het begin met een kans in de pipeline.",
+      "jij": "Pas de slagingskans in Fase 1 aan als die verandert."
+     },
+     {
+      "title": "Nieuwe sectie Concurrenten",
+      "box": [
+       8,
+       580,
+       1692,
+       270
+      ],
+      "wat": "Je kunt bestaande concurrenten aan de verkoopkans koppelen.",
+      "waarom": "Zo zien we met wie we concurreren en waarom we winnen of verliezen.",
+      "jij": "Voeg een concurrent toe als de klant ook met andere aanbieders praat."
+     }
+    ]
+   },
+   {
+    "title": "Fase 3 – Offerte",
+    "sub": "Het formele voorstel aan de prospect.",
+    "old": "img/oud/nk-04-fase-3.png",
+    "neu": "img/nieuw/nk-06-fase-3.png",
+    "changes": [
+     {
+      "title": "Aantal medewerkers is weg",
+      "box": [
+       8,
+       568,
+       1692,
+       92
+      ],
+      "wat": "Dit veld staat nu als Aantal werknemers op Algemene informatie. Alleen Speciale condities blijft hier over.",
+      "waarom": "De omvang van de klant is vanaf het begin nodig.",
+      "jij": "Je vindt het aantal werknemers op het eerste tabblad."
+     }
+    ]
+   },
+   {
+    "title": "Fase 4 – Onderhandeling (deel 1)",
+    "sub": "Bovenste deel van het tabblad.",
+    "old": "img/oud/nk-05-fase-4-deel-1.png",
+    "neu": "img/nieuw/nk-07-fase-4-deel-1.png",
+    "changes": [
+     {
+      "title": "Jaarlijkse kosten (ARR) automatisch",
+      "box": [
+       8,
+       598,
+       830,
+       46
+      ],
+      "wat": "Definitieve jaarlijkse kosten (ARR) wordt berekend uit de producten van Fase 1 en is vergrendeld.",
+      "waarom": "Bedragen hoeven niet meer dubbel ingevuld te worden en kloppen altijd met de producten.",
+      "jij": "Klopt het bedrag niet? Pas dan de producten aan."
+     },
+     {
+      "title": "Eenmalige kosten automatisch",
+      "box": [
+       8,
+       656,
+       850,
+       46
+      ],
+      "wat": "Definitieve jaarlijkse kosten (OTR) heet nu Definitieve eenmalige kosten. Ook dit bedrag wordt uit de producten berekend.",
+      "waarom": "De oude naam was verwarrend: OTR zijn eenmalige kosten, geen jaarlijkse.",
+      "jij": "Eenmalige kosten komen uit de producten. Je vult ze niet meer zelf in."
+     },
+     {
+      "title": "Definitieve contractduur",
+      "box": [
+       8,
+       714,
+       830,
+       46
+      ],
+      "wat": "Contractduur # Mnd heet nu Definitieve contractduur # Mnd.",
+      "waarom": "Zo is duidelijk dat dit de afgesproken looptijd is.",
+      "jij": "Vul de looptijd in maanden in zoals die met de klant is afgesproken."
+     },
+     {
+      "title": "Nieuw veld Definitieve TCV",
+      "box": [
+       8,
+       772,
+       830,
+       46
+      ],
+      "wat": "De totale contractwaarde wordt automatisch berekend.",
+      "waarom": "Uit de jaarlijkse kosten, de eenmalige kosten en de contractduur.",
+      "jij": "Je ziet direct wat het contract in totaal waard is."
+     },
+     {
+      "title": "Dubbel veld is weg",
+      "box": null,
+      "wat": "Definitieve gewenste producten stond twee keer op dit tabblad. Beide velden zijn weg; de producten staan in de productlijst.",
+      "waarom": "Het dubbele veld was een fout.",
+      "jij": "Minder velden om in te vullen."
+     }
+    ]
+   },
+   {
+    "title": "Fase 4 – Onderhandeling (deel 2)",
+    "sub": "Onderste deel van het tabblad, na scrollen.",
+    "old": "img/oud/nk-06-fase-4-deel-2.png",
+    "neu": "img/nieuw/nk-08-fase-4-deel-2.png",
+    "changes": [
+     {
+      "title": "Factuur instructies is weg",
+      "box": [
+       8,
+       450,
+       1692,
+       70
+      ],
+      "wat": "Het veld Factuur instructies (PO benodigd?) staat hier niet meer. Je vult PO / Referentie in Fase 5 in.",
+      "waarom": "Alle factuurgegevens staan nu bij elkaar in Fase 5.",
+      "jij": "Een PO-nummer of referentie vul je in Fase 5 in."
+     },
+     {
+      "title": "Sectie Producten",
+      "box": [
+       8,
+       548,
+       1692,
+       310
+      ],
+      "wat": "Onderaan Fase 4 zie je dezelfde productlijst als in Fase 1.",
+      "waarom": "Zo controleer je de producten bij de definitieve afspraken.",
+      "jij": "Wijzigen de afspraken tijdens de onderhandeling? Pas dan hier de producten aan."
+     }
+    ]
+   },
+   {
+    "title": "Fase 5 – Facturatie",
+    "sub": "Contract klaarzetten voor de administratieafdeling.",
+    "old": "img/oud/nk-07-fase-5.png",
+    "neu": "img/nieuw/nk-09-fase-5-deel-1.png",
+    "changes": [
+     {
+      "title": "Sales blijft verantwoordelijk",
+      "box": [
+       8,
+       272,
+       1692,
+       226
+      ],
+      "wat": "Volgens de uitleg ben jij in Fase 5 nog verantwoordelijk voor het aanmaken of verlengen van het contract.",
+      "waarom": "Het contract zal altijd vanuit de accountmanager naar de klant moeten worden verzonden.",
+      "jij": "Fase 5 is ook jouw werk: rond hem af voordat je de verkoopkans overdraagt."
+     },
+     {
+      "title": "Nieuwe velden voor facturatie",
+      "box": [
+       8,
+       515,
+       830,
+       345
+      ],
+      "wat": "Start datum contract, PO / Referentie, BTW percentage, Aantal licenties, Definitieve contractduur en Definitieve TCV staan nu bij elkaar. Aantal licenties en TCV worden berekend.",
+      "waarom": "Zo hebben we alles op één plek en indien er iets gewijzigd moet worden, dan wordt het via deze schermen automatisch gewijzigd op accountniveau.",
+      "jij": "Controleer de bedragen en vul de startdatum, de referentie en het BTW-percentage in."
+     },
+     {
+      "title": "Contract (Upsell)",
+      "box": [
+       846,
+       658,
+       844,
+       40
+      ],
+      "wat": "Bij een upsell kies je hier het bestaande contract waar de nieuwe regels bij komen.",
+      "waarom": "Zo komt een upsell in het juiste contract terecht.",
+      "jij": "Alleen invullen bij een upsell."
+     },
+     {
+      "title": "Contract en contractregels genereren",
+      "box": [
+       846,
+       704,
+       844,
+       50
+      ],
+      "wat": "Zet je deze schakelaar op Ja, dan maakt Dynamics automatisch een contract met contractregels aan.",
+      "waarom": "Het contract hoeft niet meer met de hand gemaakt te worden.",
+      "jij": "Zet de schakelaar pas op Ja als producten, contractduur en startdatum kloppen."
+     },
+     {
+      "title": "Gegenereerd en Oorspronkelijk Contract",
+      "box": [
+       846,
+       762,
+       844,
+       96
+      ],
+      "wat": "Na het genereren zie je hier een link naar het nieuwe contract. Bij een verlenging staat ook het oude contract erbij.",
+      "waarom": "Zo vind je het contract direct vanuit de verkoopkans.",
+      "jij": "Klik op de link om het contract te bekijken."
+     }
+    ]
+   },
+   {
+    "title": "Fase 5 – Factuurgegevens",
+    "sub": "Gegevens die uit het account komen, na scrollen.",
+    "old": "img/oud/nk-07-fase-5.png",
+    "neu": "img/nieuw/nk-10-fase-5-deel-2.png",
+    "changes": [
+     {
+      "title": "Gegevens uit het account",
+      "box": [
+       8,
+       382,
+       1692,
+       446
+      ],
+      "wat": "Een nieuwe sectie toont de factuurgegevens van de klant, zoals KvK-nummer, BTW-nummer, factuuradres en debiteurnummer. Veel van deze gegevens komen uit het bestaande account.",
+      "waarom": "We hebben deze gegevens nodig om goed te kunnen factureren.",
+      "jij": "Controleer de gegevens en vul aan wat ontbreekt."
+     },
+     {
+      "title": "Wijzigen geldt voor alle contracten",
+      "box": [
+       400,
+       388,
+       500,
+       26
+      ],
+      "wat": "Pas je hier iets aan, dan verandert het op het account, en dus voor alle contracten van die klant.",
+      "waarom": "Er is maar één set factuurgegevens per klant.",
+      "jij": "Wijzig alleen als de gegevens van de klant echt veranderd zijn."
+     }
+    ]
+   },
+   {
+    "title": "Afsluiten als binnengehaald",
+    "sub": "Het venster dat verschijnt als je de verkoopkans wint.",
+    "old": null,
+    "neu": "img/nieuw/nk-11-verkoopkans-binnengehaald.png",
+    "changes": [
+     {
+      "title": "Werkelijke omzet = TCV",
+      "box": [
+       1225,
+       116,
+       480,
+       46
+      ],
+      "wat": "Klik je op Afsluiten als binnengehaald, dan toont het venster bij Werkelijke omzet nu de TCV. Eerder was dat de handmatig ingevulde potentiële omzet per jaar.",
+      "waarom": "De TCV is de echte waarde van het contract.",
+      "jij": "Controleer het bedrag en de sluitingsdatum voordat je op Opslaan en sluiten klikt."
+     }
+    ]
+   }
+  ]
+ },
+ "vl": {
+  "label": "Verlenging",
+  "type": "Type Verlenging",
+  "intro": "Voor verkoopkansen bij een bestaande klant.",
+  "screens": [
+   {
+    "title": "Algemene informatie",
+    "sub": "Het eerste tabblad dat je ziet als je een verkoopkans aanmaakt.",
+    "old": "img/oud/vl-01-algemene-informatie.png",
+    "neu": "img/nieuw/vl-01-algemene-informatie.png",
+    "changes": [
+     {
+      "title": "Contactpersoon is verplicht",
+      "box": [
+       8,
+       378,
+       562,
+       36
+      ],
+      "wat": "Je kunt de verkoopkans pas opslaan als er een contactpersoon is gekozen.",
+      "waarom": "Elke verkoopkans heeft een vast aanspreekpunt bij de klant nodig.",
+      "jij": "Kies de contactpersoon meteen bij het aanmaken."
+     },
+     {
+      "title": "Aantal werknemers staat hier",
+      "box": [
+       8,
+       474,
+       562,
+       36
+      ],
+      "wat": "Het aantal werknemers van de klant vul je nu op dit tabblad in. Eerder stond het als Aantal medewerkers in Fase 3.",
+      "waarom": "De omvang van de klant is vanaf het begin nodig voor een goede inschatting.",
+      "jij": "Vul het aantal werknemers in bij het aanmaken."
+     },
+     {
+      "title": "Onderwerp wordt automatisch gevuld",
+      "box": [
+       8,
+       522,
+       562,
+       36
+      ],
+      "wat": "De verkoopkans krijgt automatisch een naam: account en type, bijvoorbeeld “Test Bedrijf Bob | Verlenging”.",
+      "waarom": "Zo hebben alle verkoopkansen dezelfde herkenbare naam.",
+      "jij": "Je hoeft zelf geen onderwerp te bedenken."
+     },
+     {
+      "title": "Verwachte start datum contract",
+      "box": [
+       8,
+       594,
+       562,
+       52
+      ],
+      "wat": "Start datum contract heet nu Verwachte start datum contract.",
+      "waarom": "In deze fase is de startdatum nog een verwachting. De definitieve startdatum vul je later in.",
+      "jij": "Vul je beste inschatting in. Je past hem later aan."
+     }
+    ]
+   },
+   {
+    "title": "Fase 1 – Lopend contract",
+    "sub": "Het contract loopt, de verlengingsgesprekken zijn nog niet gestart.",
+    "old": "img/oud/vl-02-fase-1.png",
+    "neu": "img/nieuw/vl-01-fase-1.png",
+    "changes": [
+     {
+      "title": "Slagingskans in Fase 1",
+      "box": [
+       846,
+       455,
+       844,
+       36
+      ],
+      "wat": "Slagingskans (%) staat nu in Fase 1 en is verplicht. Eerder stond het in Fase 2.",
+      "waarom": "Zo staat elke verkoopkans vanaf het begin met een kans in de pipeline. Dit getal is belangrijk voor onze forecasting.",
+      "jij": "Schat de slagingskans al in de eerste fase in. Je moet dus eerder met een waarde komen."
+     },
+     {
+      "title": "Potentiële omzet per jaar blijft handmatig",
+      "box": [
+       8,
+       500,
+       824,
+       40
+      ],
+      "wat": "Dit veld wordt niet uit de producten berekend.",
+      "waarom": "Dit zal nog even een handmatig veld blijven.",
+      "jij": "Vul de potentiële omzet per jaar zelf in, zoals je gewend was."
+     },
+     {
+      "title": "Sectie Gewenste producten",
+      "box": [
+       8,
+       688,
+       1692,
+       172
+      ],
+      "wat": "De velden Gewenste oplossing en Gewenste oplossing overig zijn verdwenen. Onderaan Fase 1 zie je nu de gekozen producten met aantal, prijs, korting en totaalprijs.",
+      "waarom": "De producten zijn de basis voor de definitieve kosten in Fase 4.",
+      "jij": "Houd de lijst actueel als de wensen van de klant veranderen."
+     }
+    ]
+   },
+   {
+    "title": "Fase 2 – In gesprek",
+    "sub": "Het verlengingsgesprek met de klant is begonnen.",
+    "old": "img/oud/vl-03-fase-2.png",
+    "neu": "img/nieuw/vl-02-fase-2.png",
+    "changes": [
+     {
+      "title": "Stilzwijgend verlengen is verplicht",
+      "box": [
+       8,
+       418,
+       1692,
+       52
+      ],
+      "wat": "Je kiest nu altijd Ja of Nee. Eerder was het een schakelaar die standaard op Nee stond.",
+      "waarom": "Zo is bij elke verlenging bewust gekozen of het contract automatisch doorloopt.",
+      "jij": "Kies Ja als het contract zonder nieuwe onderhandeling doorloopt. Kies Nee als je opnieuw gaat onderhandelen."
+     },
+     {
+      "title": "Slagingskans is weg",
+      "box": [
+       846,
+       496,
+       844,
+       44
+      ],
+      "wat": "Slagingskans staat hier niet meer. Je vult hem in Fase 1 in.",
+      "waarom": "Zo staat elke verkoopkans vanaf het begin met een kans in de pipeline.",
+      "jij": "Pas de slagingskans in Fase 1 aan als die verandert."
+     },
+     {
+      "title": "Nieuwe sectie Concurrenten",
+      "box": [
+       8,
+       555,
+       1692,
+       290
+      ],
+      "wat": "Je kunt bestaande concurrenten aan de verkoopkans koppelen.",
+      "waarom": "Zo zien we met wie we concurreren en waarom we winnen of verliezen.",
+      "jij": "Voeg een concurrent toe als de klant ook met andere aanbieders praat."
+     }
+    ]
+   },
+   {
+    "title": "Stilzwijgend verlengen: Ja",
+    "sub": "Wat er gebeurt als het contract stilzwijgend wordt verlengd.",
+    "old": null,
+    "neu": "img/nieuw/vl-04-fase-5-stilzwijgend-verlengen.png",
+    "changes": [
+     {
+      "title": "Direct naar Te Factureren",
+      "box": [
+       230,
+       136,
+       1445,
+       58
+      ],
+      "wat": "Kies je Ja, dan springt de verkoopkans meteen naar de laatste fase, Te Factureren. Offerte en Onderhandeling worden overgeslagen.",
+      "waarom": "Bij een stilzwijgende verlenging is er geen offerte of onderhandeling nodig.",
+      "jij": "Je komt direct in Fase 5 terecht. Controleer daar de gegevens van het nieuwe contract."
+     },
+     {
+      "title": "Contract genereren",
+      "box": [
+       846,
+       704,
+       844,
+       50
+      ],
+      "wat": "Ook hier zet je Contract en contractregels genereren op Ja om het nieuwe contract aan te maken.",
+      "waarom": "Het contract hoeft niet meer met de hand gemaakt te worden.",
+      "jij": "Controleer startdatum, contractduur en producten voordat je de schakelaar op Ja zet."
+     },
+     {
+      "title": "Oorspronkelijk contract is gekoppeld",
+      "box": [
+       846,
+       814,
+       844,
+       46
+      ],
+      "wat": "Bij Oorspronkelijk Contract (bij verlenging) staat automatisch het contract dat verlengd wordt.",
+      "waarom": "Zo is duidelijk welk contract wordt voortgezet.",
+      "jij": "Klik op de link om het lopende contract te bekijken."
+     }
+    ]
+   },
+   {
+    "title": "Fase 3 – Offerte",
+    "sub": "Het formele voorstel aan de klant.",
+    "old": "img/oud/vl-04-fase-3.png",
+    "neu": "img/nieuw/vl-05-fase-3.png",
+    "changes": [
+     {
+      "title": "Aantal medewerkers is weg",
+      "box": [
+       8,
+       568,
+       1692,
+       92
+      ],
+      "wat": "Dit veld staat nu als Aantal werknemers op Algemene informatie. Alleen Speciale condities blijft hier over.",
+      "waarom": "De omvang van de klant is vanaf het begin nodig.",
+      "jij": "Je vindt het aantal werknemers op het eerste tabblad."
+     }
+    ]
+   },
+   {
+    "title": "Fase 4 – Onderhandeling (deel 1)",
+    "sub": "Bovenste deel van het tabblad.",
+    "old": "img/oud/vl-05-fase-4-deel-1.png",
+    "neu": "img/nieuw/vl-06-fase-4-deel-1.png",
+    "changes": [
+     {
+      "title": "Jaarlijkse kosten (ARR) automatisch",
+      "box": [
+       8,
+       568,
+       830,
+       46
+      ],
+      "wat": "Definitieve jaarlijkse kosten (ARR) wordt berekend uit de producten van Fase 1 en is vergrendeld.",
+      "waarom": "Bedragen hoeven niet meer dubbel ingevuld te worden en kloppen altijd met de producten.",
+      "jij": "Klopt het bedrag niet? Pas dan de producten aan."
+     },
+     {
+      "title": "Eenmalige kosten automatisch",
+      "box": [
+       8,
+       626,
+       850,
+       46
+      ],
+      "wat": "Definitieve jaarlijkse kosten (OTR) heet nu Definitieve eenmalige kosten. Ook dit bedrag wordt uit de producten berekend.",
+      "waarom": "De oude naam was verwarrend: OTR zijn eenmalige kosten, geen jaarlijkse.",
+      "jij": "Eenmalige kosten komen uit de producten. Je vult ze niet meer zelf in."
+     },
+     {
+      "title": "Definitieve contractduur",
+      "box": [
+       8,
+       684,
+       830,
+       46
+      ],
+      "wat": "Contractduur # Mnd heet nu Definitieve contractduur # Mnd.",
+      "waarom": "Zo is duidelijk dat dit de afgesproken looptijd is.",
+      "jij": "Vul de looptijd in maanden in zoals die met de klant is afgesproken."
+     },
+     {
+      "title": "Nieuw veld Definitieve TCV",
+      "box": [
+       8,
+       742,
+       830,
+       46
+      ],
+      "wat": "De totale contractwaarde wordt automatisch berekend.",
+      "waarom": "Uit de jaarlijkse kosten, de eenmalige kosten en de contractduur.",
+      "jij": "Je ziet direct wat het contract in totaal waard is."
+     },
+     {
+      "title": "Dubbel veld is weg",
+      "box": null,
+      "wat": "Definitieve gewenste producten stond twee keer op dit tabblad. Beide velden zijn weg; de producten staan in de productlijst.",
+      "waarom": "Het dubbele veld was een fout.",
+      "jij": "Minder velden om in te vullen."
+     }
+    ]
+   },
+   {
+    "title": "Fase 4 – Onderhandeling (deel 2)",
+    "sub": "Onderste deel van het tabblad, na scrollen.",
+    "old": "img/oud/vl-06-fase-4-deel-2.png",
+    "neu": "img/nieuw/vl-07-fase-4-deel-2.png",
+    "changes": [
+     {
+      "title": "Factuur instructies is weg",
+      "box": [
+       8,
+       452,
+       1692,
+       70
+      ],
+      "wat": "Het veld Factuur instructies (PO benodigd?) staat hier niet meer. Je vult PO / Referentie in Fase 5 in.",
+      "waarom": "Alle factuurgegevens staan nu bij elkaar in Fase 5.",
+      "jij": "Een PO-nummer of referentie vul je in Fase 5 in."
+     },
+     {
+      "title": "Sectie Producten",
+      "box": [
+       8,
+       550,
+       1692,
+       310
+      ],
+      "wat": "Onderaan Fase 4 zie je dezelfde productlijst als in Fase 1.",
+      "waarom": "Zo controleer je de producten bij de definitieve afspraken.",
+      "jij": "Wijzigen de afspraken tijdens de onderhandeling? Pas dan hier de producten aan."
+     }
+    ]
+   },
+   {
+    "title": "Fase 5 – Facturatie",
+    "sub": "Contract klaarzetten voor de administratieafdeling.",
+    "old": "img/oud/vl-07-fase-5.png",
+    "neu": "img/nieuw/vl-03-fase-5.png",
+    "changes": [
+     {
+      "title": "Sales blijft verantwoordelijk",
+      "box": [
+       8,
+       258,
+       1692,
+       182
+      ],
+      "wat": "Volgens de uitleg ben jij in Fase 5 nog verantwoordelijk voor het aanmaken of verlengen van het contract.",
+      "waarom": "Het contract zal altijd vanuit de accountmanager naar de klant moeten worden verzonden.",
+      "jij": "Fase 5 is ook jouw werk: rond hem af voordat je de verkoopkans overdraagt."
+     },
+     {
+      "title": "Nieuwe velden voor facturatie",
+      "box": [
+       8,
+       458,
+       830,
+       360
+      ],
+      "wat": "Start datum contract, PO / Referentie, BTW percentage, Aantal licenties, Definitieve contractduur en Definitieve TCV staan nu bij elkaar. Aantal licenties en TCV worden berekend.",
+      "waarom": "Zo hebben we alles op één plek en indien er iets gewijzigd moet worden, dan wordt het via deze schermen automatisch gewijzigd op accountniveau.",
+      "jij": "Controleer de bedragen en vul de startdatum, de referentie en het BTW-percentage in."
+     },
+     {
+      "title": "Contract (Upsell)",
+      "box": [
+       846,
+       600,
+       844,
+       40
+      ],
+      "wat": "Bij een upsell kies je hier het bestaande contract waar de nieuwe regels bij komen.",
+      "waarom": "Zo komt een upsell in het juiste contract terecht.",
+      "jij": "Alleen invullen bij een upsell."
+     },
+     {
+      "title": "Contract en contractregels genereren",
+      "box": [
+       846,
+       646,
+       844,
+       50
+      ],
+      "wat": "Zet je deze schakelaar op Ja, dan maakt Dynamics automatisch een contract met contractregels aan.",
+      "waarom": "Het contract hoeft niet meer met de hand gemaakt te worden.",
+      "jij": "Zet de schakelaar pas op Ja als producten, contractduur en startdatum kloppen."
+     },
+     {
+      "title": "Gegenereerd en Oorspronkelijk Contract",
+      "box": [
+       846,
+       704,
+       844,
+       96
+      ],
+      "wat": "Na het genereren zie je hier een link naar het nieuwe contract. Bij een verlenging staat ook het oude contract erbij.",
+      "waarom": "Zo vind je het contract direct vanuit de verkoopkans.",
+      "jij": "Klik op de link om het contract te bekijken."
+     }
+    ]
+   },
+   {
+    "title": "Fase 5 – Factuurgegevens",
+    "sub": "Gegevens die uit het account komen, na scrollen.",
+    "old": "img/oud/vl-07-fase-5.png",
+    "neu": "img/nieuw/vl-08-fase-5-deel-2.png",
+    "changes": [
+     {
+      "title": "Gegevens uit het account",
+      "box": [
+       8,
+       382,
+       1692,
+       446
+      ],
+      "wat": "Een nieuwe sectie toont de factuurgegevens van de klant, zoals KvK-nummer, BTW-nummer, factuuradres en debiteurnummer. Veel van deze gegevens komen uit het bestaande account.",
+      "waarom": "We hebben deze gegevens nodig om goed te kunnen factureren.",
+      "jij": "Controleer de gegevens en vul aan wat ontbreekt."
+     },
+     {
+      "title": "Wijzigen geldt voor alle contracten",
+      "box": [
+       400,
+       388,
+       500,
+       26
+      ],
+      "wat": "Pas je hier iets aan, dan verandert het op het account, en dus voor alle contracten van die klant.",
+      "waarom": "Er is maar één set factuurgegevens per klant.",
+      "jij": "Wijzig alleen als de gegevens van de klant echt veranderd zijn."
+     }
+    ]
+   },
+   {
+    "title": "Afsluiten als binnengehaald",
+    "sub": "Het venster dat verschijnt als je de verkoopkans wint.",
+    "old": null,
+    "neu": null,
+    "changes": [
+     {
+      "title": "Werkelijke omzet = TCV",
+      "box": null,
+      "wat": "Klik je op Afsluiten als binnengehaald, dan toont het venster bij Werkelijke omzet nu de TCV. Eerder was dat de handmatig ingevulde potentiële omzet per jaar.",
+      "waarom": "De TCV is de echte waarde van het contract.",
+      "jij": "Controleer het bedrag en de sluitingsdatum voordat je op Opslaan en sluiten klikt."
+     }
+    ]
+   }
+  ]
+ }
 };
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -257,19 +1075,20 @@ function renderIntro(){
   app.innerHTML = `
   <div class="intro">
     <div class="eyebrow">Dynamics 365 Sales · Verkoopkansen</div>
-    <h1>Wat is er veranderd in Verkoopkansen?</h1>
-    <p class="lead">Het formulier voor verkoopkansen is vernieuwd. In een paar minuten zie je per scherm wat er anders is, waarom, en wat het voor jouw werk betekent.</p>
+    <h1>Wijzigingen verkoopkansen Dynamics</h1>
+    <p class="lead">Er hebben een aantal wijzigingen plaatsgevonden voor onze verkoopkansen in Dynamics. In een paar minuten zie je per scherm wat er anders is, waarom, en wat het voor jouw werk betekent.</p>
+    <p class="lead">We zijn Dynamics aan het klaarstomen voor een Exact-integratie, daarvoor hebben we nu al een aantal wijzigingen aan laten brengen. Je kunt nu per verkoopkans aangeven om welke producten het gaat en met hoeveel licenties, en Dynamics maakt automatisch een contract met contractregels aan.</p>
     <ul class="howto">
       <li><b>Sleep het schuifje</b><span>Links zie je het oude scherm, rechts het nieuwe.</span></li>
       <li><b>Klik op een nummer</b><span>De oranje nummers wijzen elke wijziging aan.</span></li>
       <li><b>Lees wat het voor jou betekent</b><span>Per wijziging: wat, waarom, en wat jij anders doet.</span></li>
     </ul>
     <div class="choose">
-      <h2>Met welk type verkoopkans werk jij?</h2>
+      <h2>Welk type verkoopkans wil je zien?</h2>
       <div class="choices">
         <button class="choice" data-keys="nk"><b>Nieuwe klant</b><span>${esc(SERIES.nk.intro)}</span><span class="go">${n("nk")} schermen →</span></button>
         <button class="choice" data-keys="vl"><b>Verlenging</b><span>${esc(SERIES.vl.intro)}</span><span class="go">${n("vl")} schermen →</span></button>
-        <button class="choice" data-keys="nk,vl"><b>Allebei</b><span>Eerst Nieuwe klant, daarna Verlenging.</span><span class="go">${n("nk") + n("vl")} schermen →</span></button>
+        <button class="choice" data-keys="nk,vl"><b>Allebei</b><span>Eerst new business, daarna verlenging.</span><span class="go">${n("nk") + n("vl")} schermen →</span></button>
       </div>
     </div>
   </div>`;
@@ -315,7 +1134,7 @@ function renderScreen({ key, idx }){
         <input type="range" id="range-${sid}" min="0" max="100" step="0.5" value="100" aria-label="Schuif tussen oud en nieuw">
         <div class="divider"></div>
         <div class="knob" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M6.5 4 2 9l4.5 5M11.5 4 16 9l-4.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        ${c.changes.map((ch, i) => `<button class="hot" data-i="${i}" style="left:${pct(Math.max(ch.box[0], 30), IMG_W)};top:${pct(Math.max(ch.box[1], 30), IMG_H)}" aria-label="Wijziging ${i + 1}: ${esc(ch.title)}">${i + 1}</button>`).join("")}
+        ${c.changes.map((ch, i) => !ch.box ? "" : `<button class="hot" data-i="${i}" style="left:${pct(Math.max(ch.box[0], 30), IMG_W)};top:${pct(Math.max(ch.box[1], 30), IMG_H)}" aria-label="Wijziging ${i + 1}: ${esc(ch.title)}">${i + 1}</button>`).join("")}
       </div>
       <p class="hint">${solo ? "Dit scherm is nieuw. Klik op een nummer voor uitleg." : "Sleep over het beeld om oud en nieuw te vergelijken. Klik op een nummer voor uitleg."}</p>
     </div>
@@ -358,19 +1177,19 @@ function renderScreen({ key, idx }){
   function select(i, reveal){
     const ch = c.changes[i];
     seen[sid][i] = true;
-    const [x, y, w, h] = ch.box;
+    const [x, y, w, h] = ch.box || [0, 0, 0, 0];
     Object.assign(hl.style, { left: pct(x, IMG_W), top: pct(y, IMG_H), width: pct(w, IMG_W), height: pct(h, IMG_H) });
-    hl.hidden = false;
+    hl.hidden = !ch.box;
     app.querySelectorAll(".hot").forEach(b => b.classList.toggle("sel", +b.dataset.i === i));
     app.querySelectorAll("#list button").forEach(b => b.setAttribute("aria-current", String(+b.dataset.i === i)));
     app.querySelectorAll("[data-seen]").forEach(s => { s.textContent = seen[sid][+s.dataset.seen] ? "✓ bekeken" : ""; });
     document.getElementById("detail").innerHTML = `
       <h3>${i + 1}. ${esc(ch.title)}</h3>
       <section><h4>Wat is er veranderd</h4><p>${esc(ch.wat)}</p></section>
-      <section><h4>Waarom</h4><p>${esc(ch.waarom)}</p></section>
+      ${ch.waarom ? `<section><h4>Waarom</h4><p>${esc(ch.waarom)}</p></section>` : ""}
       <section class="you"><h4>Wat betekent dit voor jou</h4><p>${esc(ch.jij)}</p></section>`;
     // Reveal the new state of the highlighted area
-    if (reveal) animateTo(Math.max(0, x / IMG_W * 100 - 2), 700);
+    if (reveal && ch.box) animateTo(Math.max(0, x / IMG_W * 100 - 2), 700);
   }
 
   range.addEventListener("input", () => { if (anim) cancelAnimationFrame(anim); setPos(+range.value); });
@@ -411,7 +1230,7 @@ function renderSummary(){
     <h1>Alles op een rij</h1>
     <p class="lead">Alle wijzigingen en wat ze voor jou betekenen. Handig om later nog eens terug te kijken.</p>
     <div class="tablewrap">${picked.map(table).join("")}</div>
-    <div class="contact"><b>Vragen?</b> Neem contact op met <em>[naam of kanaal invullen]</em>.</div>
+    <div class="contact"><b>Vragen?</b> Stuur Bob een mail of een Teams-bericht.</div>
     <nav class="pager" style="margin-top:0">
       <button class="btn" id="prev">← Vorige</button>
       ${other ? `<button class="btn primary" id="other">Bekijk ook ${esc(SERIES[other].label)} →</button>` : `<button class="btn" id="restart">Terug naar start</button>`}
