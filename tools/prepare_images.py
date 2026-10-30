@@ -6,6 +6,8 @@ and writes cropped images (form area only, 1707 x 860) to site/img/.
 Edits on the new screenshots:
   - tab "Tabblad" is renamed to "Bestanden" (glyphs copied from an old screenshot)
   - the "Prognosecategorie" row is removed from Algemene informatie (test environment only)
+  - the "Bron" row, not yet in the test environment, is copied from the old screenshot into
+    Algemene informatie (Nieuwe klant), above "Toelichting Broncampagne"
 
 Run from the repository root:  python3 tools/prepare_images.py
 """
@@ -114,6 +116,16 @@ def remove_rows(img, y0, y1, x0=WIN_X, x1=WIN_X + 586):
     return img
 
 
+def insert_rows(img, y, patch, x0=WIN_X):
+    """Insert a band (e.g. a form row) at y in the left form column; what is below moves down."""
+    img = img.copy()
+    h = patch.height
+    below = img.crop((x0, y, x0 + patch.width, img.height - h))
+    img.paste(below, (x0, y + h))
+    img.paste(patch, (x0, y))
+    return img
+
+
 def crop_window(img, x=WIN_X, y=WIN_Y):
     return img.crop((x, y, x + W, y + H))
 
@@ -162,6 +174,10 @@ def main():
         img, renamed = rename_tabblad(img)
         if rel in prognose:
             img = remove_rows(img, *prognose[rel])
+        if rel == "nieuwe-klant/01-algemene-informatie.png":
+            # Band 420-468 of the cropped old screenshot holds the Bron row
+            bron = Image.open(OUT / "oud" / "nk-01-algemene-informatie.png").convert("RGB").crop((0, 420, 586, 468))
+            img = insert_rows(img, WIN_Y + 420, bron)
         img = crop_window(img, x=special_x.get(rel, WIN_X))
         name = f"{prefix[f.parent.name]}-{f.name}"
         img.save(OUT / "nieuw" / name, optimize=True)
